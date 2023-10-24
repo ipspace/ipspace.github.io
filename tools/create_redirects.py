@@ -11,13 +11,17 @@ def parse_cli() -> argparse.Namespace:
   return parser.parse_args()
 
 def read_yaml(fname: str) -> Box:
-  return Box().from_yaml(fname,default_box=True,default_box_none_transform=False)
+  return Box().from_yaml(filename=fname,default_box=True,default_box_none_transform=False)
 
 def create_files(args: argparse.Namespace, reds: Box) -> None:
   for fn,target in reds.items():
     if '/index.html' in target:
       target = target.replace('/index.html','/')
-    with open(f"{args.html}/{fn}") as output:
+    file = pathlib.Path(args.html) / fn
+    parent = file.parent
+    print(f'parent: {parent}')
+    parent.mkdir(parents=True,exist_ok=True)
+    with open(str(file),"w") as output:
       output.write(
 f"""<!DOCTYPE html>
 <meta charset="utf-8">
@@ -38,7 +42,7 @@ def scan_root(path: str,reds: Box,args) -> Box:
 
 def main() -> None:
   args = parse_cli()
-  reds = read_yaml(args.output)
+  reds = read_yaml(args.redirects)
   create_files(args,reds)
 
 main()

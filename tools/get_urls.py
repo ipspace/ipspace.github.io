@@ -14,7 +14,7 @@ def parse_cli() -> argparse.Namespace:
 
 def read_yaml(fname: str) -> Box:
   try:
-    return Box().from_yaml(fname,default_box=True,default_box_none_transform=False)
+    return Box().from_yaml(filename=fname,default_box=True,default_box_none_transform=False)
   except:
     return Box({},default_box=True,default_box_none_transform=False)
 
