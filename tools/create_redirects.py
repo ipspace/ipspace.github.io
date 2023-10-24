@@ -6,7 +6,7 @@ def parse_cli() -> argparse.Namespace:
   parser = argparse.ArgumentParser(
               prog='create_redirects',
               description='Create HTML redirect files')
-  parser.add_argument('--html',default='_html')
+  parser.add_argument('--html',default='docs')
   parser.add_argument('--redirects',default='redirect.yml')
   return parser.parse_args()
 
